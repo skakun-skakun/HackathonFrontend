@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react'
 import './App.css'
-import * as path from "node:path";
 
 export default function App() {
     const textboxRef: any = useRef<HTMLTextAreaElement | null>(null);
