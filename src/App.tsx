@@ -60,8 +60,8 @@ export default function App() {
     }
 
     return (
-        <div className={"flex flex-col h-screen items-center w-xl max-w-screen m-auto gap-10 pt-10 " + (response ? "justify-start": "justify-center")}>
-            <form className="flex flex-col gap-10" onSubmit={handleSubmit}>
+        <div className={"flex flex-col h-screen items-center gap-10 pt-10 " + (response ? "justify-start": "justify-center")}>
+            <form className="flex flex-col w-xl max-w-screen gap-10 px-10" onSubmit={handleSubmit}>
                 <h1 className="text-center text-6xl">Комунальний помічник</h1>
                 <div className="relative">
                     <textarea ref={textboxRef} value={textAreaValue} onChange={handleChange} onKeyDown={checkForEnter} placeholder="Чим я можу Вам допомогти?" rows={1}
@@ -79,7 +79,7 @@ export default function App() {
                     </button>
                 </div>
             </form>
-            {isLoading ? <p className="text-2xl">loading...</p>: <p className="text-2xl w-full">{response}</p>}
+            {isLoading ? <p className="text-2xl">loading...</p>: <p className="text-2xl px-10 w-6xl max-w-screen">{response}</p>}
         </div>
     )
 }
