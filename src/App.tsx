@@ -9,7 +9,7 @@ export default function App() {
     const [response, setResponse] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
-    const handleChange = (event) => {
+    const handleChange = (event: any) => {
         setTextAreaValue(event.target.value);
         if (textboxRef.current instanceof HTMLTextAreaElement) {
             textboxRef.current.style.height="inherit";
@@ -17,7 +17,7 @@ export default function App() {
         }
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event: any) => {
         if (event)
             event.preventDefault();
         // setTextAreaValue('');
@@ -27,7 +27,7 @@ export default function App() {
             buttonRef.current.classList.toggle("opacity-50");
             setIsLoading(true);
             console.log(textAreaValue);
-            const res = await fetch('https://a6rn8adkxb.eu-central-1.awsapprunner.com/api/process-complaint', {
+            await fetch('https://a6rn8adkxb.eu-central-1.awsapprunner.com/api/process-complaint', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export default function App() {
         }
     }
 
-    const checkForEnter = async (event) => {
+    const checkForEnter = async (event: any) => {
         if (event.key == 'Enter') {
             event.preventDefault();
             await handleSubmit(null);
@@ -64,7 +64,7 @@ export default function App() {
             <form className="flex flex-col gap-10" onSubmit={handleSubmit}>
                 <h1 className="text-center text-6xl">Комунальний помічник</h1>
                 <div className="relative">
-                    <textarea ref={textboxRef} value={textAreaValue} onChange={handleChange} onKeyDown={checkForEnter} placeholder="Чим я можу Вам допомогти?" rows="1"
+                    <textarea ref={textboxRef} value={textAreaValue} onChange={handleChange} onKeyDown={checkForEnter} placeholder="Чим я можу Вам допомогти?" rows={1}
                               className="w-full min-h-16 text-xl/10 rounded-[32px] py-3 pl-5 pr-15 bg-white shadow-xl placeholder:text-neutral-500 resize-none"/>
                     <button ref={buttonRef} type="submit" className="absolute bottom-5 right-4 cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"
