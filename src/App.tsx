@@ -1,12 +1,14 @@
 import { useState, useRef } from 'react'
 import './App.css'
+import * as path from "node:path";
 
 export default function App() {
     const textboxRef: any = useRef<HTMLTextAreaElement | null>(null);
     const buttonRef: any = useRef<HTMLButtonElement | null>(null);
     const [textAreaValue, setTextAreaValue] = useState('');
 
-    const [response, setResponse] = useState('')
+    const [classification, setClassification] = useState('');
+    const [genRequest, setGenRequest] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
     const handleChange = (event: any) => {
@@ -26,7 +28,6 @@ export default function App() {
             buttonRef.current.classList.toggle("cursor-pointer");
             buttonRef.current.classList.toggle("opacity-50");
             setIsLoading(true);
-            console.log(textAreaValue);
             await fetch('https://a6rn8adkxb.eu-central-1.awsapprunner.com/api/process-complaint', {
                 method: 'POST',
                 headers: {
@@ -36,12 +37,12 @@ export default function App() {
                     "text": textAreaValue
                 })
             }).then(res => res.json()).then(data => {
-                console.log(data);
                 if (data.success) {
-                    setResponse(data.data.classification.result);
+                    setClassification(data.data.classification.result);
+                    setGenRequest(data.data.generatedRequest);
                 }
                 else {
-                    setResponse(data.message);
+                    setClassification(data.message);
                 }
                 setIsLoading(false);
             });
@@ -60,7 +61,7 @@ export default function App() {
     }
 
     return (
-        <div className={"flex flex-col h-screen items-center gap-10 pt-10 " + (response ? "justify-start": "justify-center")}>
+        <div className={"flex flex-col h-screen items-center gap-10 pt-10 " + (classification ? "justify-start": "justify-center")}>
             <form className="flex flex-col w-xl max-w-screen gap-10 px-10" onSubmit={handleSubmit}>
                 <h1 className="text-center text-6xl">Комунальний помічник</h1>
                 <div className="relative">
@@ -79,7 +80,13 @@ export default function App() {
                     </button>
                 </div>
             </form>
-            {isLoading ? <p className="text-2xl">loading...</p>: <p className="text-2xl px-10 w-6xl max-w-screen">{response}</p>}
+            {isLoading ? <p className="text-2xl">loading...</p>:
+                <div className="flex flex-col gap-10 px-10 w-6xl max-w-screen">
+                    <p className="text-xl">{classification}</p>
+                    {genRequest ? <p className="text-2xl font-semibold whitespace-pre-line">{genRequest}</p> : null}
+                    <p></p>
+                </div>
+            }
         </div>
     )
 }
