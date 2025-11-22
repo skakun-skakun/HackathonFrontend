@@ -60,7 +60,7 @@ export default function App() {
     }
 
     return (
-        <div className={"flex flex-col h-screen items-center w-xl max-w-screen m-auto gap-10 " + (response ? "justify-start": "justify-center")}>
+        <div className={"flex flex-col h-screen items-center w-xl max-w-screen m-auto gap-10 pt-10 " + (response ? "justify-start": "justify-center")}>
             <form className="flex flex-col gap-10" onSubmit={handleSubmit}>
                 <h1 className="text-center text-6xl">Комунальний помічник</h1>
                 <div className="relative">
